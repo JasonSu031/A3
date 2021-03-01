@@ -19,22 +19,32 @@ public class InformationGainCalculator {
 		for(int i = 0; i<dataset.attributes.length-1; i++){ 
 			Attribute a = dataset.attributes[i];
 			double maxGain = 0;
+			String maxValue = "";
 			if(a.getType().equals(AttributeType.NOMINAL)){
 				gain = EntropyEvaluator.evaluate(dataset.partitionByNominallAttribute(i));
 			}else{
 				String [] numbers = a.getValues();
+				int temp=0;
 				for(int j =0; j<numbers.length; j++){
-					System.out.print(dataset.getValueAt(j,i)+" ");
-					gain = EntropyEvaluator.evaluate(dataset.partitionByNumericAttribute(i,j));
-					if(maxGain<gain)maxGain = gain;
+					for(int k =0; k<dataset.numRows; k++){
+						if(dataset.getValueAt(k,i).equals(numbers[j])){
+							temp=k;
+						}
+					}
+					String value = dataset.getValueAt(temp,i);
+					gain = EntropyEvaluator.evaluate(dataset.partitionByNumericAttribute(i,temp));
+					if(maxGain<gain){
+						maxGain = gain;
+						maxValue = value;
+					}
 				}
+
 				gain = maxGain;
 			}
-			//info[i] = new GainInfoItem(a.getName(), a.getType() , gain, "80"); 
+			info[i] = new GainInfoItem(a.getName(), a.getType() , gain, maxValue); 
 		}
-		//GainInfoItem.reverseSort(info);
-		//return info;
-		return null;
+		GainInfoItem.reverseSort(info);
+		return info;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -55,13 +65,13 @@ public class InformationGainCalculator {
 
 		GainInfoItem[] items = calculateAndSortInformationGains(virtual);
 
-		//Print out the output
-		// System.out.println(
-		// 		" *** items represent (attribute name, information gain) in descending order of gain value ***");
-		// System.out.println();
+		// Print out the output
+		System.out.println(
+				" *** items represent (attribute name, information gain) in descending order of gain value ***");
+		System.out.println();
 
-		// for (int i = 0; i < items.length; i++) {
-		// 	System.out.println(items[i]);
-		// }
+		for (int i = 0; i < items.length; i++) {
+			System.out.println(items[i]);
+		}
 	}
 }

@@ -63,10 +63,8 @@ public class EntropyEvaluator {
 				if(numFirstState==numRows) entropyP=0;
 			}
 			sum+=entropyP;
-
 		}
 		gain = entropyD-sum;
-		System.out.println(gain);
 		return gain;
 	}
 	

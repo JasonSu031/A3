@@ -48,9 +48,10 @@ public class ActualDataSet extends DataSet {
 	/**
 	 * Implementation of DataSet's abstract getValueAt method for an actual dataset
 	 */
-	public String getValueAt(int row, int attributeIndex) {											
-		if((row>=0 || row<matrix.length )&& (attributeIndex>=0||attributeIndex<matrix[0].length))	//Checks if the values of row and attributeIndex entered are out of bounds
+	public String getValueAt(int row, int attributeIndex) {										
+		if((row>=0 && row<matrix.length )&& (attributeIndex>=0 &&attributeIndex<matrix[0].length)){ //Checks if the values of row and attributeIndex entered are out of bounds
 			return matrix[row][attributeIndex];														//Returns the matrix values located at row: row and column: attributeIndex
+		}			
 		return null;
 	}
 

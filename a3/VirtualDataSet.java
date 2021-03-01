@@ -134,8 +134,6 @@ public class VirtualDataSet extends DataSet {
             subset[i-1] = source.getAttribute(i);
         }
 
-
-
 		for(int i = 0; i < partitions.length;i++){ 
 			LinkedList<Integer> rows = new LinkedList<Integer> (); 									// using linkedlist to do collection of split rows  
 			int count = 0; 
@@ -179,12 +177,12 @@ public class VirtualDataSet extends DataSet {
 	public VirtualDataSet[] partitionByNumericAttribute(int attributeIndex, int valueIndex) {
 		// WRITE YOUR CODE HERE!
 
-		 if(attributes[attributeIndex].getType()==AttributeType.NOMINAL){ 							// aviod passing through nominal value to current method
-            return null; // 
+		 if(attributes[attributeIndex].getType()==AttributeType.NOMINAL){ 							// avoid passing through nominal value to current method
+            return null; 
         }
 			VirtualDataSet [] partitions = new VirtualDataSet[2]; 									// creates two split path 
 
-			int split = Integer.parseInt(source.getValueAt(valueIndex , attributeIndex));			// determine the middle number in order to split 
+			double split = Double.parseDouble(getValueAt(valueIndex , attributeIndex));			// determine the middle number in order to split 
 			
 			LinkedList<Integer> rowsLess = new LinkedList<Integer> ();  							// using linkedlist to do collection of split rows that less than valueIndex value
 			
@@ -197,11 +195,11 @@ public class VirtualDataSet extends DataSet {
 
 			for(int j = 0; j < source.numRows; j++){ 
 				
-				if( Integer.parseInt(source.getValueAt(j,attributeIndex)) <= split){ 				// transform from string to integer in order to compare the number smaller than middle number
+				if(Double.parseDouble(getValueAt(j,attributeIndex)) <= split){ 				// transform from string to integer in order to compare the number smaller than middle number
 					
 					rowsLess.add(j);																// add rows that correspond with the current attribute of spliting 
 					countLess++;																	// determine the size of partition rows array 
-				}else if(Integer.parseInt(source.getValueAt(j,attributeIndex)) > split){			// transform from string to integer in order to compare the number bigger than middle number
+				}else if(Double.parseDouble(getValueAt(j,attributeIndex)) > split){			// transform from string to integer in order to compare the number bigger than middle number
 					
 					rowsMore.add(j); 																// add rows that correspond with the current attribute of spliting 
 					countMore++;																	// determine the size of partition rows array 
